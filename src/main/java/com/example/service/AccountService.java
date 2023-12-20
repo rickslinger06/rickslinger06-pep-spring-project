@@ -3,6 +3,7 @@ package com.example.service;
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Account;
+import com.example.entity.Message;
 import com.example.exception.UserAlreadyExistException;
 import com.example.exception.UserIsBlankException;
 import com.example.exception.UserPasswordException;
@@ -35,5 +36,16 @@ public boolean usernameAlreadyExists(Account account){
    
     return accountRepository.existsByUsername(account.getUsername());
 }
+
+public boolean existsByUsernameAndPassword(String username, String password) {
+    
+    return accountRepository.existsByUsernameAndPassword(username, password);
+}
+
+public Account findByUsername(String username) {
+    return accountRepository.findByUsername(username);
+}
+
+
 
 }
