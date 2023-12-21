@@ -153,6 +153,12 @@ public class SocialMediaController {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
+    /**
+     * 
+     * @param message_id
+     * @param message
+     * @return satus code 200 if row affected is greater than 0
+     */
     @PatchMapping("messages/{message_id}")
     public ResponseEntity<?> updateMessage(@PathVariable int message_id, @RequestBody Message message) {
         String newMessageText = message.getMessage_text();
@@ -160,11 +166,13 @@ public class SocialMediaController {
         if (newMessageText != null && !newMessageText.isBlank() && newMessageText.length() <= 255) {
             int rowsAffected = messageService.updateMessage(message_id, newMessageText);
     
+            // 200 OK with rowsAffected in the response body
             if (rowsAffected > 0) {
-                return ResponseEntity.ok(rowsAffected); // 200 OK with rowsAffected in the response body
+                return ResponseEntity.ok(rowsAffected); 
             }
         }
-        return ResponseEntity.badRequest().build(); // 400 Bad Request
+        // 400 Bad Request
+        return ResponseEntity.badRequest().build(); 
     }
     
     

@@ -116,14 +116,18 @@ public int deleteMessageById(int message_id) {
     return 0; 
 }
 
-public void updateMessage(Message messageFound) {
-}
-
+/**
+ * @param message_id
+ * @param newMessage
+ * @return 1 if upadte was successful and 0 otherwise
+ */
 public int updateMessage(int message_id, String newMessage) {
 
+    //getting the message by message_id
     Message messageFound = messageRepository.findMessageById(message_id);
 
     if(messageFound != null){
+        //set the messageFound message_text to newMessage
         messageFound.setMessage_text(newMessage);
         messageRepository.save(messageFound);
         return 1;
