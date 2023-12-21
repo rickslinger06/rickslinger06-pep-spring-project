@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -132,6 +134,40 @@ public class SocialMediaController {
         return ResponseEntity.status(HttpStatus.OK).body(messageList);
        
     }
+
+    /**
+     * 
+     * @param message_id
+     * @return status code 200 if message is successfully deleted and empty body if message doent exist
+     */
+    @DeleteMapping("messages/{message_id}")
+    public ResponseEntity<?> deleteMessage(@PathVariable int message_id){
+    
+        int rowsAffected = messageService.deleteMessageById(message_id);
+    
+        if(rowsAffected > 0){
+            return ResponseEntity.status(HttpStatus.OK).body(rowsAffected);
+        }
+    
+         // Resource not found, 200 with empty body
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @PatchMapping("messages/{message_id}")
+    public ResponseEntity<?> updateMessage(@PathVariable int message_id, @RequestBody Message message) {
+        String newMessageText = message.getMessage_text();
+        
+        if (newMessageText != null && !newMessageText.isBlank() && newMessageText.length() <= 255) {
+            int rowsAffected = messageService.updateMessage(message_id, newMessageText);
+    
+            if (rowsAffected > 0) {
+                return ResponseEntity.ok(rowsAffected); // 200 OK with rowsAffected in the response body
+            }
+        }
+        return ResponseEntity.badRequest().build(); // 400 Bad Request
+    }
+    
+    
     
 
  

@@ -10,9 +10,8 @@ import com.example.entity.Message;
 
 public interface MessageRepository extends JpaRepository<Message, Long>  {
 
-    @Query("SELECT m FROM Message m WHERE m.message_id = :id")
-    Message findMessageById(int id);
+    @Query("SELECT m FROM Message m WHERE m.message_id = :message_id")
+    Message findMessageById(@Param("message_id")int message_id);
 
-    @Query("SELECT m FROM Message m WHERE m.postedBy = :postedBy")
-    List<Message> findAllMessagesByPostedBy(@Param("postedBy") Integer postedBy);
+  
 }

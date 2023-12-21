@@ -18,6 +18,11 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
+    /**
+     * 
+     * @param account
+     * @return saved account object
+     */
     public Account registerAccount(Account account) {
     
         if(account.getUsername().isBlank()){
@@ -32,16 +37,30 @@ public class AccountService {
 
 }
 
+/**
+ * 
+ * @param account
+ * @return true if usernsme already exist
+ */
 public boolean usernameAlreadyExists(Account account){
    
     return accountRepository.existsByUsername(account.getUsername());
 }
 
+/**
+ * 
+ * @param username
+ * @param password
+ * @return return true if rhe username and password exists
+ */
 public boolean existsByUsernameAndPassword(String username, String password) {
     
     return accountRepository.existsByUsernameAndPassword(username, password);
 }
-
+/**
+ * @param username
+ * @return account object if username exists
+ */
 public Account findByUsername(String username) {
     return accountRepository.findByUsername(username);
 }
